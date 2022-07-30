@@ -1,4 +1,4 @@
-package com.test.shared.domain.model
+package com.test.shared.model
 
 
 import com.google.gson.annotations.SerializedName

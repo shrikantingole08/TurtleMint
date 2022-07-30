@@ -1,6 +1,6 @@
 package com.test.shared.network
 
-import com.test.turtlemint.BuildConfig
+import com.test.shared.BuildConfig
 import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,7 +16,7 @@ open class ApiService @Inject constructor(
             .build().create(ApiClient::class.java)
 
 
-    suspend fun callListAsync() =
-        apiClient.callIssueList()
+    fun callListAsync() =
+        apiClient.callIssueListAsync()
 
 }

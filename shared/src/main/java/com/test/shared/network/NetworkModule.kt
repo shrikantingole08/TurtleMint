@@ -2,9 +2,9 @@ package com.test.shared.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.test.shared.BuildConfig
+import com.test.shared.ConstantsBase
 import com.test.shared.core.base.BaseRepository
 import com.test.shared.network.repository.IssueRepository
-import com.test.shared.util.ConstantsBase
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
