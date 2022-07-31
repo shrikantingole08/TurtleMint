@@ -5,12 +5,14 @@ import android.os.Parcel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.*
+import com.bumptech.glide.Glide
 
 /**
  * Implementation of lazy that is not thread safe. Useful when you know what thread you will be
@@ -124,4 +126,10 @@ fun <T> MutableLiveData<T>.setValueIfNew(newValue: T) {
 
 fun <T> MutableLiveData<T>.postValueIfNew(newValue: T) {
     if (this.value != newValue) postValue(newValue)
+}
+
+
+fun ImageView.loadImage(url: String) {
+    Glide.with(this.context)
+        .load(url).into(this)
 }

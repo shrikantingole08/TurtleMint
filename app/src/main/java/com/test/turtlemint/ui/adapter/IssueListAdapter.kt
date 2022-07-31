@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.test.shared.model.GitIssueResponseItem
+import com.test.turtlemint.base.loadImage
 import com.test.turtlemint.databinding.ItemIssueListBinding
+import com.test.turtlemint.utils.formatDate
 
 
 class IssueListAdapter(private val listener: OnCardClickListener?) :
@@ -42,7 +44,9 @@ class IssueListAdapter(private val listener: OnCardClickListener?) :
         fun setData(item: GitIssueResponseItem) {
             binding.tvTitle.text = item.title
             binding.tvDesc.text = item.body?.take(200)
-
+            binding.tvAuthor.text = "Author : ${item.user?.login}"
+            binding.tvDate.text = item.createdAt?.formatDate() ?: ""
+            item.user?.avatarUrl?.let { binding.ivAvatar.loadImage(it) }
         }
 
     }
