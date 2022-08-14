@@ -131,5 +131,5 @@ fun <T> MutableLiveData<T>.postValueIfNew(newValue: T) {
 
 fun ImageView.loadImage(url: String) {
     Glide.with(this.context)
-        .load(url).into(this)
+        .load(url).override(90).into(this)
 }

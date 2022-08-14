@@ -19,4 +19,7 @@ open class ApiService @Inject constructor(
     fun callListAsync() =
         apiClient.callIssueListAsync()
 
+    fun loadComments(commentUrl: String) =
+        apiClient.callListComments(commentUrl)
+
 }

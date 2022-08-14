@@ -3,7 +3,7 @@ package com.test.turtlemint.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.test.shared.model.GitIssueResponseItem
+import com.test.shared.model.room.GitListItem
 import com.test.turtlemint.base.loadImage
 import com.test.turtlemint.databinding.ItemIssueListBinding
 import com.test.turtlemint.utils.formatDate
@@ -11,7 +11,7 @@ import com.test.turtlemint.utils.formatDate
 
 class IssueListAdapter(private val listener: OnCardClickListener?) :
     RecyclerView.Adapter<IssueListAdapter.ViewHolder>() {
-    private var list: List<GitIssueResponseItem>? = null
+    private var list: List<GitListItem>? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -20,7 +20,7 @@ class IssueListAdapter(private val listener: OnCardClickListener?) :
         return ViewHolder(ItemIssueListBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    fun setItemList(itemList: List<GitIssueResponseItem>) {
+    fun setItemList(itemList: List<GitListItem>) {
         list = itemList
         notifyItemRangeChanged(0, itemList.size)
     }
@@ -35,18 +35,21 @@ class IssueListAdapter(private val listener: OnCardClickListener?) :
     }
 
     interface OnCardClickListener {
-        fun onCLick(item: GitIssueResponseItem)
+        fun onCLick(item: GitListItem)
     }
 
     inner class ViewHolder(var binding: ItemIssueListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun setData(item: GitIssueResponseItem) {
+        fun setData(item: GitListItem) {
             binding.tvTitle.text = item.title
-            binding.tvDesc.text = item.body?.take(200)
-            binding.tvAuthor.text = "Author : ${item.user?.login}"
-            binding.tvDate.text = item.createdAt?.formatDate() ?: ""
-            item.user?.avatarUrl?.let { binding.ivAvatar.loadImage(it) }
+            binding.tvDesc.text = item.desc?.take(200)
+            binding.tvAuthor.text = "Author : ${item.Author}"
+            binding.tvDate.text = item.date?.formatDate() ?: ""
+            item.avatarUrl?.let { binding.ivAvatar.loadImage(it) }
+            binding.root.setOnClickListener {
+                listener?.onCLick(item)
+            }
         }
 
     }

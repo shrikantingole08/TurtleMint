@@ -5,6 +5,7 @@ import com.test.shared.BuildConfig
 import com.test.shared.ConstantsBase
 import com.test.shared.core.base.BaseRepository
 import com.test.shared.network.repository.IssueRepository
+import com.test.shared.room.GitListDao
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -75,9 +76,10 @@ class NetworkModule {
     @Singleton
     fun provideRssFeedRepository(
         apiService: ApiService,
-        baseRepository: BaseRepository
+        baseRepository: BaseRepository,
+        dao: GitListDao
     ): IssueRepository = IssueRepository(
-        apiService, baseRepository
+        apiService, baseRepository, dao
     )
 
 

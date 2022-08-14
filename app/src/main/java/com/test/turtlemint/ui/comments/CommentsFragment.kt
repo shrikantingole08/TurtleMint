@@ -1,32 +1,30 @@
-package com.test.turtlemint.ui.listissue
+package com.test.turtlemint.ui.comments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.test.shared.model.comments.CommentResItem
 import com.test.shared.model.room.GitListItem
-import com.test.turtlemint.R
 import com.test.turtlemint.base.BaseFragment
 import com.test.turtlemint.base.viewModelProvider
 import com.test.turtlemint.databinding.FragmentIssueListBinding
-import com.test.turtlemint.ui.adapter.IssueListAdapter
+import com.test.turtlemint.ui.adapter.CommentsListAdapter
 import javax.inject.Inject
 
-class GitListFragment : BaseFragment(), IssueListAdapter.OnCardClickListener {
+class CommentsFragment : BaseFragment(), CommentsListAdapter.OnCardClickListener {
 
-    private var listAdapter: IssueListAdapter? = null
+    private var listAdapter: CommentsListAdapter? = null
     private var _binding: FragmentIssueListBinding? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var viewModel: GitListViewModel
+    private lateinit var viewModel: CommentsViewModel
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -36,6 +34,7 @@ class GitListFragment : BaseFragment(), IssueListAdapter.OnCardClickListener {
         viewModel = viewModelProvider(viewModelFactory)
 
         _binding = FragmentIssueListBinding.inflate(inflater, container, false)
+        viewModel.item = arguments?.getParcelable<GitListItem>("data")
         return binding.root
 
     }
@@ -46,6 +45,7 @@ class GitListFragment : BaseFragment(), IssueListAdapter.OnCardClickListener {
         initUI()
         setObserver()
         binding.progressBar.isVisible = true
+        viewModel.loadComments()
     }
 
     private fun setObserver() {
@@ -54,11 +54,16 @@ class GitListFragment : BaseFragment(), IssueListAdapter.OnCardClickListener {
             binding.progressBar.isVisible = false
 
         }
-        viewModel.callDetailList()
+        viewModel.failure.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
+            binding.progressBar.isVisible = false
+
+        }
+        viewModel.loadComments()
     }
 
     private fun initUI() {
-        listAdapter = IssueListAdapter(this)
+        listAdapter = CommentsListAdapter(this)
         binding.rvList.apply {
             this.adapter = listAdapter
         }
@@ -69,9 +74,7 @@ class GitListFragment : BaseFragment(), IssueListAdapter.OnCardClickListener {
         _binding = null
     }
 
-    override fun onCLick(item: GitListItem) {
-        findNavController().navigate(R.id.SecondFragment, Bundle().apply {
-            putParcelable("data", item)
-        })
+
+    override fun onCLick(item: CommentResItem) {
     }
 }

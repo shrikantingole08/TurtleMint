@@ -2,7 +2,8 @@ package com.test.turtlemint.base.di
 
 import com.test.shared.core.di.ActivityScoped
 import com.test.turtlemint.ui.MainActivity
-import com.test.turtlemint.ui.listissue.GalleryModule
+import com.test.turtlemint.ui.comments.CommentsModule
+import com.test.turtlemint.ui.listissue.GitListModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -21,7 +22,8 @@ abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(
         modules = [
-            GalleryModule::class
+            GitListModule::class,
+            CommentsModule::class
         ]
     )
     internal abstract fun mainActivity(): MainActivity

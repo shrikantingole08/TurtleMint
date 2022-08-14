@@ -9,10 +9,10 @@ import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 /**
- * Module where classes needed to create the [GalleryModule] are defined.
+ * Module where classes needed to create the [GitListModule] are defined.
  */
 @Module
-internal abstract class GalleryModule {
+internal abstract class GitListModule {
 
     @FragmentScoped
     @ContributesAndroidInjector

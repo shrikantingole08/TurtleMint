@@ -4,6 +4,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import com.test.shared.network.repository.PreferenceStorage
 import com.test.shared.network.repository.SharedPreferenceStorage
+import com.test.shared.room.AppDatabase
 import com.test.turtlemint.app.App
 import dagger.Module
 import dagger.Provides
@@ -33,6 +34,10 @@ class AppModule {
         context.applicationContext.getSystemService(Context.CLIPBOARD_SERVICE)
                 as ClipboardManager
 
+    @Singleton
+    @Provides
+    fun provideGitDao(context: Context) =
+        AppDatabase.buildDatabase(context).listDao()
 
 }
 
